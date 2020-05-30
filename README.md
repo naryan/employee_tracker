@@ -1,2 +1,2 @@
 # Employee Tracker
-A content management system to track employees
+A command line tool employee management system to track empolyee
