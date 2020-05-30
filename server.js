@@ -10,18 +10,14 @@ const connection = mysql.createConnection({
   password: "password",
   database: "companyDB"
 });
-
-// Initiate MySQL Connection.
 connection.connect(function(err) {
   if (err) {
     console.error("error connecting: " + err.stack);
     return;
   }
-  console.log("connected as id " + connection.threadId);
   startTracker();
 });
 
-//initial questions for main menu
 const questions = [
   {
     name: "what_to_do",
@@ -31,20 +27,14 @@ const questions = [
       "View All Employees",
       "View Departments",
       "View Roles",
-      // "View All Employees by Department",
-      // "View All Employees by Manager",
       "Add Employee",
       "Add a Role",
       "Add a Department",
-      // "Update Employee Role",
-      // "Update Employee Manager",
-      // "Remove Employee",
       "Exit"
     ]
   }
 ];
 
-//start tracker / prompt questions
 function startTracker() {
   inquirer
     .prompt(questions)
@@ -60,17 +50,9 @@ function startTracker() {
         case "View All Employees":
           viewAllEmployees();
           break;
-        // case "View Employees by Manager":
-        //     viewEmployeesByManager();
-        //     break;
-        // case "View Employees by Department":
-        //     viewEmployeesByDepartment();
         case "Add Employee":
           addEmployee();
           break;
-        // case "Remove an Employee":
-        //     removeEmployee();
-        //     break;
         case "Add a Department":
           addDepartments();
           break;
@@ -90,7 +72,6 @@ function startTracker() {
     });
 }
 
-//view all employees function
 function viewAllEmployees() {
   connection.query(
     "SELECT first_name as 'First Name' , last_name as 'Last Name', title as 'Title', salary as 'Salary' FROM employee LEFT JOIN role ON employee.role_id = role.id;",
@@ -102,7 +83,6 @@ function viewAllEmployees() {
   );
 }
 
-//view departments function
 function viewDepartments() {
   connection.query("SELECT * FROM department", function(err, res) {
     if (err) throw err;
@@ -111,7 +91,6 @@ function viewDepartments() {
   });
 }
 
-//view roles function
 function viewRoles() {
   connection.query("SELECT * FROM role", function(err, res) {
     if (err) throw err;
@@ -120,7 +99,6 @@ function viewRoles() {
   });
 }
 
-//add employee function
 function addEmployee() {
   connection.query("SELECT * FROM employee", function(err, managerResult) {
     if (err) throw err;
@@ -237,7 +215,6 @@ function addDepartments() {
     });
 }
 
-//add roles function
 function addRoles() {
   connection.query("SELECT * FROM department", function(err, departmentResult) {
     if (err) throw err;
